@@ -16,7 +16,6 @@ contract YourContract {
 	// State Variables
 	address public immutable owner;
 	string public greeting = "Building Unstoppable Apps!!!";
-	bool public premium = false;
 	uint256 public totalCounter = 0;
 	mapping(address => uint) public userGreetingCounter;
 
@@ -24,7 +23,6 @@ contract YourContract {
 	event GreetingChange(
 		address indexed greetingSetter,
 		string newGreeting,
-		bool premium,
 		uint256 value
 	);
 
@@ -59,16 +57,6 @@ contract YourContract {
 		greeting = _newGreeting;
 		totalCounter += 1;
 		userGreetingCounter[msg.sender] += 1;
-
-		// msg.value: built-in global variable that represents the amount of ether sent with the transaction
-		if (msg.value > 0) {
-			premium = true;
-		} else {
-			premium = false;
-		}
-
-		// emit: keyword used to trigger an event
-		emit GreetingChange(msg.sender, _newGreeting, msg.value > 0, 0);
 	}
 
 	/**
