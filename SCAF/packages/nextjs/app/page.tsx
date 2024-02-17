@@ -16,27 +16,17 @@ import {
 
 const Home: NextPage = () => {
 
-  const { address } = useAccount();
-
   const { writeAsync: Pay } = useScaffoldContractWrite({
     contractName: "YourContract",
-    functionName: "TokenIsPaid",
-    args: [address],
-   // value: ethers.parseEther("0.0001") // Aggiungi questo per impostare msg.value a 0.001 ETH
+    functionName: "PayContract",
+    value: BigInt(ethers.parseEther("0.0001").toString()),
   });
+
   return <>
-          <div className="flex items-center flex-col flex-grow pt-10">
-        <div>
-          <Address address={address} />
-          <Balance address={address} />
+          <div>
+          <button className="btn btn-primary" onClick={Pay}>Buy 5 Token for 0.001 ETH</button>
         </div>
-      </div>
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="p-5">
-          <button className="btn btn-primary" onClick={Pay}>Get Token</button>
-        </div>
-      </div>
-  </>;
+        </>;
 };
 
 export default Home;
