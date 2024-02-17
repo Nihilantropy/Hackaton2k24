@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract MyToken is ERC20 {
-    constructor(address _tokenAddress, address _owner) ERC20("MyToken", "MTK") {
+contract YourContract is ERC20 {
+    constructor(address _owner) ERC20("MyToken", "MTK") {
         _mint(msg.sender, 100000000 * 10 ** decimals());
         owner = _owner;
-        tokenAddress = _tokenAddress;
     }
 
     address public immutable owner;
@@ -28,34 +26,15 @@ contract MyToken is ERC20 {
 		_;
 	}
 
-    // Funzione per rilasciare i token solo se l'utente ha pagato
-    function releaseTokensIfPaid(address recipient) internal {
-        
-        
+    function mint(address recipient) public payable {
+        require(msg.value == 0.0001 ether, "Invalid import");
+        bool isPaid = msg.value > 0;
 
-        // Rilascia 5 token al destinatario
-        IERC20(tokenAddress).transfer(recipient, amount);
-        
-        // Emetti l'evento per notificare il rilascio dei token
-        emit TokensReleased(recipient);
-    }
-
-    function mint() external payable{
-    uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
-        require(msg.sender, "Indirizzo del destinatario non valido");
-        require(isPaid, "L'utente non ha pagato");
-        _mint(msg.sender, amount);
-
-    }
-
-    // Funzione payable per consentire all'utente di pagare per i token
-    function payForTokens() external {
-        require(msg.value == 1 ether, "Invalid import");
-        require(!isPaid, "User already paid");
-        releaseTokensIfPaid(msg.sender);
-
-        // Modifica lo stato della variabile isPaid
-        isPaid = true;
+        uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
+        if (isPaid) {
+            _mint(recipient, amount);
+        emit TokensReleased(msg.sender);
+        }
     }
 
     function withdraw() public isOwner {
