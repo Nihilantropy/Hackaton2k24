@@ -29,7 +29,7 @@ contract YourContract is ERC20 {
 		_;
 	}
 
-    function mint(address recipient) public payable {
+    function SendTokenIfPaid() public payable {
         bool isPaid;
         require(msg.value == 0.0001 ether, "Invalid import");
         require(_transactionsCount[msg.sender] < MAX_TRANSACTIONS_PER_DAY, "Max transactions per day reached");
@@ -41,7 +41,7 @@ contract YourContract is ERC20 {
 
         uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
         if (isPaid) {
-            _mint(recipient, amount);
+            transfer(msg.sender, amount);
         emit TokensReleased(msg.sender);
         }
     }
