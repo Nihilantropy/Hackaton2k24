@@ -2,7 +2,7 @@
 
 Introducing the Future of Gaming: where your skills are rewarded!
 
-Our platform brings together a variety of games, each offering a unique challenge where players can earn Tokens. Our platform operates on a token-based system, where these tokens, purchasable with Ethereum.
+Our platform operates on a token-based system, where these tokens, purchasable with Ethereum. It brings together a variety of games, each offering a unique challenge where players can earn Tokens. 
 It's not just a game; it's an opportunity to showcase your prowess and earn cryptocurrency through your victories. 
 
 As you accumulate tokens from your triumphs against formidable foes, you unlock the opportunity to purchase exclusive NFTs. These aren't just digital collectibles; they're masterpieces of virtual art, unique in-game assets, and symbols of your gaming achievements.
