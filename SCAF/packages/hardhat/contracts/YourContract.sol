@@ -9,13 +9,16 @@ contract YourContract is ERC20 {
         owner = _owner;
     }
 
+    uint256 constant public MAX_TRANSACTIONS_PER_DAY = 5;
+    uint256 constant public DAY_IN_SECONDS = 86400;
+
+    mapping(address => uint256) private _transactionsCount;
+    mapping(address => uint256) private _lastTransactionTime;
+
     address public immutable owner;
 
     // Variabile per memorizzare l'indirizzo del token
     address public tokenAddress;
-
-    // Variabile per tenere traccia dello stato del pagamento dell'utente
-    bool public isPaid = false;
 
     // Evento per notificare quando i token vengono rilasciati
     event TokensReleased(address recipient);
@@ -27,8 +30,14 @@ contract YourContract is ERC20 {
 	}
 
     function mint(address recipient) public payable {
+        bool isPaid;
         require(msg.value == 0.0001 ether, "Invalid import");
-        bool isPaid = msg.value > 0;
+        require(_transactionsCount[msg.sender] < MAX_TRANSACTIONS_PER_DAY, "Max transactions per day reached");
+        require(block.timestamp - _lastTransactionTime[msg.sender] >= DAY_IN_SECONDS, "Wait 24 hours to reset transactions count");
+        
+        isPaid = true;
+        _transactionsCount[msg.sender]++;
+        _lastTransactionTime[msg.sender] = block.timestamp;
 
         uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
         if (isPaid) {
