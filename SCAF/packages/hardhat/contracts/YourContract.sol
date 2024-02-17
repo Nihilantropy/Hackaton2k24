@@ -31,6 +31,7 @@ contract YourContract is ERC20 {
 
     function TokenIsPaid(address recipient) public payable {
         bool isPaid;
+        uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
         require(msg.value == 0.0001 ether, "Invalid import");
         require(_transactionsCount[msg.sender] < MAX_TRANSACTIONS_PER_DAY, "Max transactions per day reached");
         require(block.timestamp - _lastTransactionTime[msg.sender] >= DAY_IN_SECONDS, "Wait 24 hours to reset transactions count");
@@ -39,7 +40,6 @@ contract YourContract is ERC20 {
         _transactionsCount[msg.sender]++;
         _lastTransactionTime[msg.sender] = block.timestamp;
 
-        uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
         if (isPaid) {
             _mint(recipient, amount);
         emit TokensReleased(msg.sender);
