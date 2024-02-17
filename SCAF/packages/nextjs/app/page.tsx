@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ethers } from "ethers";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
@@ -14,22 +15,25 @@ import {
 } from "~~/hooks/scaffold-eth";
 
 const Home: NextPage = () => {
-  const [newGreeting, setNewGreeting] = useState("");
-  const { writeAsync: setGreeting } = useScaffoldContractWrite({
-    contractName: "Bank.sol",
-    functionName: "setGreeting",
-    args: [newGreeting],
+
+  const { address } = useAccount();
+
+  const { writeAsync: Pay } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "TokenIsPaid",
+    args: [address],
+   // value: ethers.parseEther("0.0001") // Aggiungi questo per impostare msg.value a 0.001 ETH
   });
   return <>
+          <div className="flex items-center flex-col flex-grow pt-10">
+        <div>
+          <Address address={address} />
+          <Balance address={address} />
+        </div>
+      </div>
       <div className="flex items-center flex-col flex-grow pt-10">
         <div className="p-5">
-          <input
-            value={newGreeting}
-            placeholder="Wallet address"
-            className="input"
-            onChange={(e) => setNewGreeting(e.target.value)}
-          />
-          <button className="btn btn-primary" onClick={setGreeting}>Get Token</button>
+          <button className="btn btn-primary" onClick={Pay}>Get Token</button>
         </div>
       </div>
   </>;
