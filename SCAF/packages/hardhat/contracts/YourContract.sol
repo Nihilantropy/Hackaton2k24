@@ -1,75 +1,65 @@
-//SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
+contract MyToken is ERC20 {
+    constructor(address _tokenAddress, address _owner) ERC20("MyToken", "MTK") {
+        _mint(msg.sender, 100000000 * 10 ** decimals());
+        owner = _owner;
+        tokenAddress = _tokenAddress;
+    }
 
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
-contract YourContract {
-	// State Variables
-	address public immutable owner;
-	string public greeting = "Building Unstoppable Apps!!!";
-	uint256 public totalCounter = 0;
-	mapping(address => uint) public userGreetingCounter;
+    address public immutable owner;
 
-	// Events: a way to emit log statements from smart contract that can be listened to by external parties
-	event GreetingChange(
-		address indexed greetingSetter,
-		string newGreeting,
-		uint256 value
-	);
+    // Variabile per memorizzare l'indirizzo del token
+    address public tokenAddress;
 
-	// Constructor: Called once on contract deployment
-	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
-	constructor(address _owner) {
-		owner = _owner;
-	}
+    // Variabile per tenere traccia dello stato del pagamento dell'utente
+    bool public isPaid = false;
 
-	// Modifier: used to define a set of rules that must be met before or after a function is executed
-	// Check the withdraw() function
-	modifier isOwner() {
+    // Evento per notificare quando i token vengono rilasciati
+    event TokensReleased(address recipient);
+
+    modifier isOwner() {
 		// msg.sender: predefined variable that represents address of the account that called the current function
 		require(msg.sender == owner, "Not the Owner");
 		_;
 	}
 
-	/**
-	 * Function that allows anyone to change the state variable "greeting" of the contract and increase the counters
-	 *
-	 * @param _newGreeting (string memory) - new greeting to save on the contract
-	 */
-	function setGreeting(string memory _newGreeting) public payable {
-		// Print data to the hardhat chain console. Remove when deploying to a live network.
-		console.log(
-			"Setting new greeting '%s' from %s",
-			_newGreeting,
-			msg.sender
-		);
+    // Funzione per rilasciare i token solo se l'utente ha pagato
+    function releaseTokensIfPaid(address recipient) internal {
+        
+        
 
-		// Change state variables
-		greeting = _newGreeting;
-		totalCounter += 1;
-		userGreetingCounter[msg.sender] += 1;
-	}
+        // Rilascia 5 token al destinatario
+        IERC20(tokenAddress).transfer(recipient, amount);
+        
+        // Emetti l'evento per notificare il rilascio dei token
+        emit TokensReleased(recipient);
+    }
 
-	/**
-	 * Function that allows the owner to withdraw all the Ether in the contract
-	 * The function can only be called by the owner of the contract as defined by the isOwner modifier
-	 */
-	function withdraw() public isOwner {
+    function mint() external payable{
+    uint256 amount = 5 * 10**18; // 5 token, assumendo che il token abbia 18 decimali
+        require(msg.sender, "Indirizzo del destinatario non valido");
+        require(isPaid, "L'utente non ha pagato");
+        _mint(msg.sender, amount);
+
+    }
+
+    // Funzione payable per consentire all'utente di pagare per i token
+    function payForTokens() external {
+        require(msg.value == 1 ether, "Invalid import");
+        require(!isPaid, "User already paid");
+        releaseTokensIfPaid(msg.sender);
+
+        // Modifica lo stato della variabile isPaid
+        isPaid = true;
+    }
+
+    function withdraw() public isOwner {
 		(bool success, ) = owner.call{ value: address(this).balance }("");
 		require(success, "Failed to send Ether");
-	}
-
-	/**
-	 * Function that allows the contract to receive ETH
-	 */
-	receive() external payable {}
+    }
 }
