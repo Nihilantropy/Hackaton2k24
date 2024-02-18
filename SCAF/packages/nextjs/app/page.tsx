@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from 'next/link';
 import { ethers } from "ethers";
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client";
@@ -25,6 +26,12 @@ const Home: NextPage = () => {
   return <>
           <div>
           <button className="btn btn-primary" onClick={Pay}>Buy 5 Token for 0.001 ETH</button>
+          <div>
+        {/* Aggiungi un bottone che reindirizza alla pagina Game.tsx */}
+        <Link href="/game" passHref>
+          <button className="btn btn-secondary">Go to Game Page</button>
+        </Link>
+      </div>
         </div>
         </>;
 };
