@@ -18,3 +18,50 @@
 <div style="padding-top:100.000%;position:relative;"><iframe src="https://gifer.com/embed/6Je" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen></iframe></div><p><a href="https://gifer.com">via GIFER</a></p>
 
 <div style="padding-top:100.000%;position:relative;"><iframe src="https://gifer.com/embed/4RNk" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen></iframe></div><p><a href="https://gifer.com">via GIFER</a></p>
+
+
+/* CSS HEX */
+--white-smoke: #f6f4f4ff;
+--english-violet: #6b4e71ff;
+--charcoal: #3a4454ff;
+--paynes-gray: #53687eff;
+--verdigris: #62a8acff;
+
+/* CSS HSL */
+--white-smoke: hsla(0, 10%, 96%, 1);
+--english-violet: hsla(290, 18%, 37%, 1);
+--charcoal: hsla(217, 18%, 28%, 1);
+--paynes-gray: hsla(211, 21%, 41%, 1);
+--verdigris: hsla(183, 31%, 53%, 1);
+
+/* SCSS HEX */
+$white-smoke: #f6f4f4ff;
+$english-violet: #6b4e71ff;
+$charcoal: #3a4454ff;
+$paynes-gray: #53687eff;
+$verdigris: #62a8acff;
+
+/* SCSS HSL */
+$white-smoke: hsla(0, 10%, 96%, 1);
+$english-violet: hsla(290, 18%, 37%, 1);
+$charcoal: hsla(217, 18%, 28%, 1);
+$paynes-gray: hsla(211, 21%, 41%, 1);
+$verdigris: hsla(183, 31%, 53%, 1);
+
+/* SCSS RGB */
+$white-smoke: rgba(246, 244, 244, 1);
+$english-violet: rgba(107, 78, 113, 1);
+$charcoal: rgba(58, 68, 84, 1);
+$paynes-gray: rgba(83, 104, 126, 1);
+$verdigris: rgba(98, 168, 172, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-right: linear-gradient(90deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-bottom: linear-gradient(180deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-left: linear-gradient(270deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-top-right: linear-gradient(45deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-bottom-right: linear-gradient(135deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-top-left: linear-gradient(225deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-bottom-left: linear-gradient(315deg, #f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
+$gradient-radial: radial-gradient(#f6f4f4ff, #6b4e71ff, #3a4454ff, #53687eff, #62a8acff);
