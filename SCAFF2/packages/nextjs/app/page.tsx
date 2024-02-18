@@ -1,9 +1,26 @@
 "use client";
 
 import Link from 'next/link';
+import { useEffect } from 'react';
 import type { NextPage } from "next";
+import { Howl } from 'howler';
 
 const Home: NextPage = () => {
+
+  useEffect(() => {
+    // Primo file audio
+    const sound1 = new Howl({
+      src: ['/musiche/elevator.mp3'],
+      autoplay: true,
+      loop: true,
+      volume: 0.5,
+    });
+
+    return () => {
+      sound1.unload();
+    };
+  }, []);
+
   return <>
       <title>SCAFF - Home</title>
       <link rel="preconnect" href="https://fonts.googleapis.com"></link>

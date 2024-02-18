@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
+import { Howl } from 'howler';
 import { Address, AddressInput, Balance } from "~~/components/scaffold-eth";
 import {
   useAccountBalance,
@@ -13,6 +14,21 @@ import {
 } from "~~/hooks/scaffold-eth";
 
 const Game: NextPage = () => {
+
+  useEffect(() => {
+    // Primo file audio
+    const sound1 = new Howl({
+      src: ['/musiche/tetris.mp3'],
+      autoplay: true,
+      loop: true,
+      volume: 0.5,
+    });
+
+    return () => {
+      sound1.unload();
+    };
+  }, []);
+
   const gridItems = Array.from({ length: 9 }, (_, index) => index + 1);
   const [gameOver, setGameOver] = useState(true);
   const [turno, setTurno] = useState(1);
