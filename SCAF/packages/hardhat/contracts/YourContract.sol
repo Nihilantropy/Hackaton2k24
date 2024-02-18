@@ -37,6 +37,10 @@ function PayContract() public payable {
     TokenIsPaid(true);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2346d2ba91fd8be073cf4dfc91a737e86bb977ff
 function TokenIsPaid(bool isPaid) private {
     require(isPaid, "Payment not made");
     
@@ -53,7 +57,11 @@ function TokenIsPaid(bool isPaid) private {
 
     function burnPlayToken() external {
         // Verifica che l'utente abbia almeno 1 token "PLAY" da bruciare
+<<<<<<< HEAD
         require(balanceOf(msg.sender) >= 1000000000000000000, "Insufficient PLAY tokens to burn");
+=======
+        require(balanceOf(msg.sender) >= 1, "Insufficient PLAY tokens to burn");
+>>>>>>> 2346d2ba91fd8be073cf4dfc91a737e86bb977ff
 
         // Brucia 1 token "PLAY" dall'utente che chiama questa funzione
         _burn(msg.sender, 1000000000000000000);
@@ -62,11 +70,14 @@ function TokenIsPaid(bool isPaid) private {
         emit BeginPlay(msg.sender);
     }
 
+<<<<<<< HEAD
     function sendTwoTokens() public payable {
         uint256 amount = 2 * 10**18;
         _mint(msg.sender, amount);
     } 
 
+=======
+>>>>>>> 2346d2ba91fd8be073cf4dfc91a737e86bb977ff
 
     function withdraw() public isOwner {
 		(bool success, ) = owner.call{ value: address(this).balance }("");
