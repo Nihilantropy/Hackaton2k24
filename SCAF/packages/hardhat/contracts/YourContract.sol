@@ -12,7 +12,7 @@ contract YourContract is ERC20, ERC20Burnable {
         owner = _owner;
     }
 
-    uint256 constant public MAX_TRANSACTIONS_PER_DAY = 7;
+    uint256 constant public MAX_TRANSACTIONS_PER_DAY = 8;
 
     mapping(address => uint256) private _transactionsCount;
 
